@@ -31,10 +31,10 @@ const { withAuth } = createAuth({
 export default withAuth(
   config({
     server: {
-      cors: {
+      /*  cors: {
         origin: true,
         credentials: true,
-      },
+      }, */
     },
     db: {
       adapter: 'mongoose',
