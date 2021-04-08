@@ -9,6 +9,7 @@ import { User } from './schemas/User';
 import { Product } from './schemas/Product';
 import { ProductImage } from './schemas/ProductImage';
 import { insertSeedData } from './seed-data';
+import { sendPasswordResetEmail } from './lib/mail';
 
 const databaseURL =
   process.env.DATABASE_URL || 'mongodb://localhost/keystone-some';
@@ -26,15 +27,21 @@ const { withAuth } = createAuth({
     fields: ['name', 'email', 'password'],
     // TODO: add roles
   },
+  passwordResetLink: {
+    async sendToken(args) {
+      // send the email
+      await sendPasswordResetEmail(args.token, args.identity);
+    },
+  },
 });
 
 export default withAuth(
   config({
     server: {
-      /*  cors: {
-        origin: true,
+      cors: {
+        origin: [process.env.FRONTEND_URL],
         credentials: true,
-      }, */
+      },
     },
     db: {
       adapter: 'mongoose',
