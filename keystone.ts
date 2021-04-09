@@ -1,4 +1,3 @@
-import { permissionsList } from './schemas/fields';
 import { config, createSchema } from '@keystone-next/keystone/schema';
 import { createAuth } from '@keystone-next/auth';
 import 'dotenv/config';
@@ -16,6 +15,7 @@ import { extendGraphqlSchema } from './mutations';
 import { OrderItem } from './schemas/OrderItem';
 import { Order } from './schemas/Order';
 import { Role } from './schemas/Roles';
+import { permissionsList } from './schemas/fields';
 
 const databaseURL =
   process.env.DATABASE_URL || 'mongodb://localhost/keystone-some';
@@ -70,7 +70,7 @@ export default withAuth(
     extendGraphqlSchema,
     ui: {
       // Show the UI only for people who pass this test
-      isAccessAllowed: ({ session }) => !!session?.data,
+      isAccessAllowed: ({ session }) => true, // !!session?.data,
     },
     session: withItemData(statelessSessions(sessionConfig), {
       User: `id name email role {${permissionsList.join(' ')}}`,
