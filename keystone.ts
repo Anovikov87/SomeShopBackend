@@ -44,10 +44,10 @@ const { withAuth } = createAuth({
 export default withAuth(
   config({
     server: {
-      cors: {
-        origin: true,//[process.env.FRONTEND_URL],
+      /*   cors: {
+        origin: true, // [process.env.FRONTEND_URL],
         credentials: true,
-      },
+      }, */
     },
     db: {
       adapter: 'mongoose',
